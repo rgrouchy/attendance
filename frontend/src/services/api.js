@@ -1,6 +1,16 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+function resolveApiBaseUrl() {
+  const envUrl = process.env.REACT_APP_API_URL;
+  if (envUrl && typeof envUrl === 'string') {
+    return envUrl.replace(/\/+$/, '');
+  }
+  const { protocol, hostname } = window.location;
+  const bracketed = hostname.includes(':') ? `[${hostname}]` : hostname;
+  return `${protocol}//${bracketed}:5000/api`;
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
