@@ -14,7 +14,7 @@ RUN npm install --production
 COPY . .
 
 # Expose the port your Express app listens on (default 3000)
-EXPOSE 3000
+EXPOSE 5000
 
 # Command to run the server
 CMD ["node", "server.js"]
