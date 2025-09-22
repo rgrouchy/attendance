@@ -350,10 +350,14 @@ For issues and questions:
 3. Check the browser console for frontend errors
 4. Check the server logs for backend errors
 
-
-
 Create Network:
 
 docker network create --driver bridge attend-net
 
  docker run -e MYSQL_ROOT_PASSWORD=rootpass --name attend-db -d --network attend-net mysql
+
+docker build -t attend-backend .
+
+docker run --network attend-net -d --name attend-backend -p 5000:5000 attend-backend
+
+docker run --network attend-net -d --name attend-frontend -p 3800:80 attend-frontend
