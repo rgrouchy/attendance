@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const crypto = require("crypto");
 const mysql = require("mysql2/promise");
 const k8s = require('@kubernetes/client-node');
@@ -11,6 +12,18 @@ const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 
 const app = express();
 app.use(express.json());
+
+// CORS configuration (allow all)
+const corsOptions = {
+	origin: true, // reflect request origin
+	credentials: true,
+	methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
+	allowedHeaders: ['Content-Type','Authorization'],
+	optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 const ALGORITHM = "aes-256-gcm";
 

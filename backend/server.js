@@ -14,10 +14,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
-  credentials: true
-}));
+const corsOptions = {
+	origin: true, // reflect request origin
+	credentials: true,
+	methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
+	allowedHeaders: ['Content-Type','Authorization'],
+	optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
