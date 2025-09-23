@@ -362,8 +362,6 @@ docker run --network attend-net -d --name attend-backend -p 5000:5000 attend-bac
 
 docker run --network attend-net -d --name attend-frontend -p 3800:80 attend-frontend
 
-
-
 Backup DB:
 
 docker exec attend-db mysqldump -u root -prootpass class_attendance_db > backup.sql

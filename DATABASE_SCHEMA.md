@@ -3,7 +3,9 @@
 ## Tables Design
 
 ### 1. classes
+
 Stores information about each class/course
+
 ```sql
 CREATE TABLE classes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,7 +22,9 @@ CREATE TABLE classes (
 ```
 
 ### 2. students
+
 Stores student information
+
 ```sql
 CREATE TABLE students (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +39,9 @@ CREATE TABLE students (
 ```
 
 ### 3. student_classes
+
 Maps students to classes (many-to-many relationship)
+
 ```sql
 CREATE TABLE student_classes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -51,7 +57,9 @@ CREATE TABLE student_classes (
 ```
 
 ### 4. attendance_sessions
+
 Stores information about when attendance was taken for a class
+
 ```sql
 CREATE TABLE attendance_sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -67,7 +75,9 @@ CREATE TABLE attendance_sessions (
 ```
 
 ### 5. student_attendance
+
 Tracks individual student attendance for each session
+
 ```sql
 CREATE TABLE student_attendance (
     id INT AUTO_INCREMENT PRIMARY KEY,
