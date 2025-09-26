@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Card, Button, Alert, Spinner, Table, Form, Badge, Modal } from 'react-bootstrap';
+import { Card, Button, Alert, Spinner, Table, Form, Badge, Modal, Toast } from 'react-bootstrap';
 import { attendanceAPI, classAPI } from '../../services/api';
 
 const AttendanceSession = () => {
@@ -40,9 +40,14 @@ const AttendanceSession = () => {
       const studentsData = studentsResponse.data;
       setStudents(studentsData);
 
-      // Map existing attendance records
+      // Map existing attendance records and normalize id
       const attendanceData = attendanceResponse.data;
-      setAttendanceRecords(attendanceData);
+      const normalizedAttendance = attendanceData.map(r => ({
+        ...r,
+        // Ensure we always have a stable `id` for the attendance record
+        id: r.attendance_id ?? r.id
+      }));
+      setAttendanceRecords(normalizedAttendance);
 
     } catch (err) {
       console.error('Error loading session data:', err);
@@ -105,7 +110,6 @@ const AttendanceSession = () => {
       }
 
       setSuccess('Attendance updated successfully');
-      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       console.error('Error updating attendance:', err);
       setError('Failed to update attendance');
@@ -165,7 +169,6 @@ const AttendanceSession = () => {
       setCurrentStudent(null);
       setNotes('');
       setSuccess('Notes updated successfully');
-      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       console.error('Error updating notes:', err);
       setError('Failed to update notes');
@@ -247,7 +250,17 @@ const AttendanceSession = () => {
       </div>
 
       {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">{success}</Alert>}
+
+      {/* Non-intrusive success toast (no layout shift) */}
+      <div className="position-fixed top-0 end-0 p-3" style={{ zIndex: 2000 }}>
+        <Toast onClose={() => setSuccess('')} show={Boolean(success)} delay={3000} autohide bg="success">
+          <Toast.Header closeButton>
+            <strong className="me-auto">Saved</strong>
+            <small>Just now</small>
+          </Toast.Header>
+          <Toast.Body className="text-white">{success || ''}</Toast.Body>
+        </Toast>
+      </div>
 
       <div className="row mb-4">
         <div className="col-md-8">

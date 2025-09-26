@@ -59,8 +59,14 @@ class Attendance {
   static async getSessionAttendance(sessionId) {
     const [rows] = await pool.execute(`
       SELECT 
-        sa.*,
-        s.student_id,
+        sa.id AS attendance_id,
+        sa.attendance_session_id,
+        sa.student_id AS student_id,
+        sa.status,
+        sa.notes,
+        sa.recorded_by,
+        sa.recorded_at,
+        s.student_id AS student_number,
         s.first_name,
         s.last_name,
         s.email
