@@ -357,6 +357,7 @@ docker network create --driver bridge attend-net
  docker run -e MYSQL_ROOT_PASSWORD=rootpass --name attend-db -d --network attend-net mysql
 
 docker build -t attend-backend .
+docker build -t attend-frontend .
 
 docker run --network attend-net -d --name attend-backend -p 5000:5000 attend-backend
 
