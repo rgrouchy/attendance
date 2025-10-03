@@ -22,8 +22,8 @@ FROM nginx:stable-alpine
 # Copy build output from Stage 1
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Copy a custom nginx config (optional, if you have one)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx config to serve app under /attendance
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80
